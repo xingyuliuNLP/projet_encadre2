@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>ProjetEncadre_BAO</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Custom fonts for this template -->
+    <link
+      href="vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <!-- Custom styles for this template -->
+    <link href="css/bao.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav
+      class="navbar navbar-fixed-top navbar-expand-lg navbar-light fixed-top"
+      id="mainNav"
+    >
+      <div class="container">
+        <a href="http://www.tal.univ-paris3.fr/plurital/"
+          ><img src="img/logo.jpg" alt="logo" class="nav-brand"
+        /></a>
+        <button
+          class="navbar-toggler navbar-toggler-right"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          Menu
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Accueil</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="bao1.html">BàO1</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="bao2.html">BàO2</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="bao3.html">BàO3</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="bao3b.html">BàO3-bis</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="conclusion.html">Conclusion</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="masthead">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-10 col-md-10 mx-auto">
+            <div class="site-heading">
+              <h1>BàO3.bis</h1>
+              <span class="subheading">- Représentation graphique</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-10 col-md-10 mx-auto">
+          <section>
+            <h3>Introduction</h3>
+            <p align="justify">
+              La dernière BàO consiste à faire des graphes de mots grâce à la
+              liste de syntagmes récupérée dans la BàO3. Les graphes de mots
+              permettent de compter et visualiser les contextes
+              morphosyntaxiques d'un ou plusieurs mots. Ce qui est
+              particulièrement utile pour interpréter les résultats. Pour
+              démonstration nous allons mettre en perspective les noms
+              "élection" et "débat" qui sont souvent présents dans la rubrique
+              àLaUne et international. Nous observerons 2 patrons NOM_ADJ et
+              VERB_DET_NOM qui possèdent le plus de formes. Ainsi nous essayons
+              d'observer une différence de qualification de ces noms.
+              <br />
+              <br />
+              La génération de graphes de mots se fera avec
+              <a href="./results/bao3b/patron2graphedemots-unix"
+                >patron2graphe-unix</a
+              >, un outil développé par Serge Fleury de l'Université Paris 3.<br />
+              La commande SHELL suivante sera appliquée sur chaque fichier pour
+              chaque motif : <br />
+              <code
+                >./patron2graphedemots-unix "iso-8859-1" patronNA_tt_3476.txt
+                motif.txt</code
+              >
+            </p>
+          </section>
+          <section>
+            <h3>Graphes</h3>
+            <p align="justify">
+              Les contextes droites de "élection" dans la rubrique
+              <code>àLaUne</code> et <code>international</code> ont montré une
+              certaine identité, à savoir que "européene", "législative" et
+              "municipale" sont les top3 dans tous les deux rubriques. On
+              pourrait ainsi déduire l'occupation assez importante des nouvelles
+              internationales dans la rubrique àLaUne.
+            </p>
+            <p align="justify">
+              Le fait de la basse fréquence de "élection" ou "débat" dans la
+              rubrique cinéma ont indiqué sa différence avec les deux autres.  
+            </p>
+            <h4>Rubrique àLaUne (3208) -- NOM+ADJ</h4>
+            <p align="center">MOTIF=élection</p>
+
+            <div align="center">
+              <a href="./results/bao3b/3208.jpg" target="_blank">
+                <img src="results/bao3b/3208.jpg" width="100%" />
+              </a>
+            </div>
+            <h4>Rubrique international (3210) -- NOM+ADJ</h4>
+            <p align="center">MOTIF=élection</p>
+            <div align="center">
+              <a href="./results/bao3b/3210.jpg" target="_blank">
+                <img src="results/bao3b/3210.jpg" width="100%" />
+              </a>
+            </div>
+            <h4>Rubrique cinéma (3476) -- NOM+ADJ</h4>
+            <p align="center">MOTIF=élection</p>
+            <div align="center">
+              <a href="./results/bao3b/3476.jpg" target="_blank">
+                <img src="results/bao3b/3476.jpg" width="100%" />
+              </a>
+            </div>
+
+            <h4>Rubrique àLaUne (3208) -- VERB+DET+NOM</h4>
+            <p align="center">MOTIF=débat</p>
+            <div align="center">
+              <a href="./results/bao3b/3208VDN.jpg" target="_blank">
+                <img src="results/bao3b/3208VDN.jpg" width="100%" />
+              </a>
+            </div>
+            <p align="justify"></p>
+            <h4>Rubrique international (3210) -- VERB+DET+NOM</h4>
+            <p align="center">MOTIF=débat</p>
+            <div align="center">
+              <a href="./results/bao3b/3210VDN.jpg" target="_blank">
+                <img src="results/bao3b/3210VDN.jpg" width="100%" />
+              </a>
+            </div>
+            <p align="justify"></p>
+            <h4>Rubrique cinéma (3476) -- VERB+DET+NOM</h4>
+            <p align="center">MOTIF=débat</p>
+            <div align="center">
+              <a href="./results/bao3b/3476VDN.jpg" target="_blank">
+                <img src="results/bao3b/3476VDN.jpg" width="100%" />
+              </a>
+            </div>
+            <p align="justify"></p>
+          </section>
+          <br />
+          <br />
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <ul class="list-inline text-center">
+              <li class="list-inline-item">
+                <a href="https://github.com/xingyuliuNLP">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://github.com/xiaoouwang">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+            </ul>
+            <p class="copyright text-muted">
+              Créé par Xingyu LIU & Xiaoou WANG &copy;2020
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Xquery</title>
+  </head>
+  <body>
+    <!-- HTML generated using hilite.me -->
+    <div
+      style="
+        background: #ffffff;
+        overflow: auto;
+        width: auto;
+        border: solid gray;
+        border-width: 0.1em 0.1em 0.1em 0.8em;
+        padding: 0.2em 0.6em;
+      "
+    >
+      <table>
+        <tr>
+          <td>
+            <pre style="margin: 0; line-height: 125%;">
+ 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10</pre
+            >
+          </td>
+          <td>
+            <pre
+              style="margin: 0; line-height: 125%;"
+            ><span style="color: #007700">&lt;corpus&gt;</span>
+    {
+        <span style="color: #008800; font-weight: bold">for</span> <span style="color: #996633">$document</span> <span style="color: #000000; font-weight: bold">in</span> <span style="color: #0066BB; font-weight: bold">collection</span>(<span style="background-color: #fff0f0">&quot;2019&quot;</span>)
+        <span style="color: #008800; font-weight: bold">for</span> <span style="color: #996633">$item</span> <span style="color: #000000; font-weight: bold">in</span> <span style="color: #996633">$document</span>//<span style="color: #007700">item</span>
+        <span style="color: #008800; font-weight: bold">let</span> <span style="color: #996633">$titre</span> <span style="color: #333333">:=</span> <span style="color: #007700">&lt;titre&gt;</span>{<span style="color: #996633">$item</span>/<span style="color: #007700">title</span>/<span style="color: #0066BB; font-weight: bold">text</span>()}<span style="color: #007700">&lt;/titre&gt;</span>
+        <span style="color: #008800; font-weight: bold">let</span> <span style="color: #996633">$description</span> <span style="color: #333333">:=</span> <span style="color: #007700">&lt;description&gt;</span>{<span style="color: #996633">$item</span>/<span style="color: #007700">description</span>/<span style="color: #0066BB; font-weight: bold">text</span>()}<span style="color: #007700">&lt;/description&gt;</span>
+        <span style="color: #008800; font-weight: bold">return</span>
+            <span style="color: #007700">&lt;item&gt;</span>{<span style="color: #996633">$titre</span>, <span style="color: #996633">$description</span>}<span style="color: #007700">&lt;/item&gt;</span>
+    }
+<span style="color: #007700">&lt;/corpus&gt;</span>
+</pre>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

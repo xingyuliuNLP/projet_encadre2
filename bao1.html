@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+
+    <title>ProjetEncadre_BAO</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Custom fonts for this template -->
+    <link
+      href="vendor/fontawesome-free/css/all.min.css"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800"
+      rel="stylesheet"
+      type="text/css"
+    />
+
+    <!-- Custom styles for this template -->
+    <link href="css/bao.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <!-- Navigation -->
+    <nav
+      class="navbar navbar-fixed-top navbar-expand-lg navbar-light fixed-top"
+      id="mainNav"
+    >
+      <div class="container">
+        <a href="http://www.tal.univ-paris3.fr/plurital/"
+          ><img src="img/logo.jpg" alt="logo" class="nav-brand"
+        /></a>
+        <button
+          class="navbar-toggler navbar-toggler-right"
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarResponsive"
+          aria-controls="navbarResponsive"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          Menu
+          <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Accueil</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="bao1.html">BàO1</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="bao2.html">BàO2</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="bao3.html">BàO3</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="bao3b.html">BàO3-bis</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="conclusion.html">Conclusion</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <header class="masthead">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-10 col-md-10 mx-auto">
+            <div class="site-heading">
+              <h1>BàO1</h1>
+              <span class="subheading"
+                >- Récupération des titres et des descriptions des articles par
+                rubrique</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+      <div class="row">
+        
+        <div class="col-lg-9 col-md-10 mx-auto">
+          <section>
+            <h3>Introduction</h3>
+          <p align="justify">
+            Pour commencer, nous voulons extraire le contenu textuel des fils RSS de l'année 2019 du journal <i>Le Monde</i>. Plus précisément, nous voulons récupérer par rubrique le titre et la description de chaque article présent dans les fichiers RSS. Notre objectif est d'écrire un programme pour réaliser cette tâche. 
+            L'enjeu de cette étape est de réussir à extraire, sur l'intégralité de l'arborescence, les contenus textuels pertinents pour notre projet et de les concaténer en un seul fichier.
+            Ainsi, pour creuser dans un arbre jusqu'à la feuille finale, nous avons employé la méthode de récursion.
+          </p>
+          </section>
+          <section>
+            <span>
+            <h3>Méthode</h3>
+          <p align="justify">
+            Le parcours récursif, plus concrètement dans notre projet, pourrait être expliqué par un bloc de pseudocode Fonction lireArb(REP): <br/>
+            <code>on ouvre un répertoire REP et on examine son contenu (les i éléments)</code><br/>
+            <code>- si i est un fichier à traiter => traiter</code><br/>
+            <code>- si i est un répertoire => lireArb(i)</code><br/>
+            Notre but est d'extraire les contenus de deux balises dans chaque fichier: les balises titres et descriptions. Ces deux types de balises sont des couples correspondant à la mise à jour d'un article et sont situées au sein de balises. 
+          </p>
+            </span>
+          </section>
+          <section>
+            <h3>Scripts</h3>
+          <p align="justify">
+            Les idées des scripts écrits en Perl et Python sont les mêmes. Comme on connaît la structure de nos fichiers XML, on peut élaborer une expression régulière qui va chercher les motifs qui nous intéressent. Ces scripts prennent en entrée le nom du répertoire contenant les fichiers xml à traiter et le nom(py)/code(pl) de rubrique. Ils nous renvoient 2 fichiers contenant les informations des titres et des descriptions sous 2 formats .xml et .txt.
+          </p>
+          </section>
+          <div>
+            <a href="./scripts/BAO1.py" download>
+              <button type="button" class="btn btn-outline-dark">
+                Python-Regex
+                <i class="fa fa-download"></i>
+              </button>
+            </a>
+            <p id="python">
+              <iframe
+                src="scripts/bao1_python.html"
+                width="830"
+                height="300"
+                frameborder="0"
+              >
+              </iframe>
+            </p>
+          </div>
+          <div>
+            <a href="./scripts/bao1_perl.pl" download>
+              <button type="button" class="btn btn-outline-dark">
+                Perl-Regex
+                <i class="fa fa-download"></i>
+              </button>
+            </a>
+            <p id="perl-re">
+              <iframe
+                src="scripts/bao1_perl.html"
+                width="830"
+                height="300"
+                frameborder="0"
+              >
+              </iframe>
+            </p>
+          </div>
+          <div>
+            <p align="justify">
+              Le module XML::RSS permet notamment de créer et de mettre à jour les fichiers RSS. Le parcours de toute l'arborescence devient plus facile grâce à ce module, ainsi que l'extraction des informations prévues grâce aux fonctions préexistées.
+            </p>
+            <a href="./scripts/BAO1_xml_rss.pl" download>
+              <button type="button" class="btn btn-outline-dark">
+                Perl-XML:RSS
+                <i class="fa fa-download"></i>
+              </button>
+            </a>
+            <p id="perl-rss">
+              <iframe
+                src="scripts/bao1_perl_rss.html"
+                width="830"
+                height="300"
+                frameborder="0"
+              >
+              </iframe>
+            </p>
+          </div>
+          <div>
+            <a href="./scripts/bao1_xquery.html" download>
+              <button type="button" class="btn btn-outline-dark">
+                XQuery
+                <i class="fa fa-download"></i>
+              </button>
+            </a>
+            <p id="xqury">
+              <iframe
+                src="scripts/bao1_xquery.html"
+                width="830"
+                height="200"
+                frameborder="0"
+              >
+              </iframe>
+            </p>
+          </div>
+          <p align="justify">
+            Une autre solution pour extaire les titres et les descriptions s'agit d'une requête XQuery, lancée sur le logiciel BaseX. Afin de pouvoir fouiller notre arborescence sur BaseX, il faut créer une base de données. On peut spécifier un motif que le logiciel utilisera pour sélectionner les fichiers xml qu'il rencontre. Une première base de données pourrait donc être créée avec l'identifiant de rubrique "3208", par exemple. Ensuite, on peut effectuer notre requête pour extraire les titres et les descriptions.
+          </p>
+          <div align="center">
+            <img src="./scripts/basex.jpg">
+          </div>
+<br/>
+<br/>
+    <section>
+            <h3>Résultats</h3>
+          <p align="justify">
+            Après le traitement de notre première boîte, nous obtenons des fichiers XML et TXT comme présentés ci-dessous. Ces ressources seraient également précieuses pour d'autres projets NLP. 
+            Pour les BàOs suivantes, nous prenons 3208, 3210 et 3476 comme entrées.
+          </p>
+          </section>
+          <div>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">Rubrique</th>
+                  <th scope="col">Sortie TXT</th>
+                  <th scope="col">Sortie XML</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <th scope="row">3208</th>
+                  <td>A la une</td>
+                  <td><a href="results/bao1/sortie_3208.txt" download>aLaUne.txt</a></td>
+                  <td>
+                    <a href="results/bao1/sortiexml_3208.xml" download>aLaUne.xml</a>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">3210</th>
+                  <td>International</td>
+                  <td>
+                    <a href="results/bao1/sortie_3210.txt" download>international.txt</a>
+                  </td>
+                  <td>
+                    <a href="results/bao1/sortiexml_3210.xml" download
+                      >international.xml</a
+                    >
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">3214</th>
+                  <td>Europe</td>
+                  <td><a href="results/bao1/sortie_3214.txt" download>europe.txt</a></td>
+                  <td>
+                    <a href="results/bao1/sortiexml_3214.xml" download>europe.xml</a>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">3224</th>
+                  <td>Société</td>
+                  <td>
+                    <a href="results/bao1/sortie_3224.txt" download>societe.txt</a>
+                  </td>
+                  <td>
+                    <a href="results/bao1/sortiexml_3224.xml" download>societe.xml</a>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">3232</th>
+                  <td>Idées</td>
+                  <td><a href="results/bao1/sortie_3232.txt" download>idees.txt</a></td>
+                  <td>
+                    <a href="results/bao1/sortiexml_3232.xml" download>idees.xml</a>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">3234</th>
+                  <td>Economie</td>
+                  <td>
+                    <a href="results/bao1/sortie_3234.txt" download>economie.txt</a>
+                  </td>
+                  <td>
+                    <a href="results/bao1/sortiexml_3234.xml" download>economie.xml</a>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">3236</th>
+                  <td>Actualité-Médias</td>
+                  <td><a href="results/bao1/sortie_3236.txt" download>media.txt</a></td>
+                  <td>
+                    <a href="results/bao1/sortiexml_3236.xml" download>media.xml</a>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">3242</th>
+                  <td>Sport</td>
+                  <td><a href="results/bao1/sortie_3242.txt" download>sport.txt</a></td>
+                  <td>
+                    <a href="results/bao1/sortiexml_3242.xml" download>sport.xml</a>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">3244</th>
+                  <td>Planète</td>
+                  <td>
+                    <a href="results/bao1/sortie_3244.txt" download>planete.txt</a>
+                  </td>
+                  <td>
+                    <a href="results/bao1/sortiexml_3244.xml" download>planete.xml</a>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">3246</th>
+                  <td>Culture</td>
+                  <td>
+                    <a href="results/bao1/sortie_3246.txt" download>culture.txt</a>
+                  </td>
+                  <td>
+                    <a href="results/bao1/sortiexml_3246.xml" download>culture.xml</a>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">3260</th>
+                  <td>Livres</td>
+                  <td><a href="results/bao1/sortie_3260.txt" download>livres.txt</a></td>
+                  <td>
+                    <a href="results/bao1/sortiexml_3260.xml" download>livres.xml</a>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">3476</th>
+                  <td>Cinéma</td>
+                  <td><a href="results/bao1/sortie_3476.txt" download>cinema.txt</a></td>
+                  <td>
+                    <a href="results/bao1/sortiexml_3476.xml" download>cinema.xml</a>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">3546</th>
+                  <td>Voyage</td>
+                  <td><a href="results/bao1/sortie_3546.txt" download>voyage.txt</a></td>
+                  <td>
+                    <a href="results/bao1/sortiexml_3546.xml" download>voyage.xml</a>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">651865</th>
+                  <td>Technologies</td>
+                  <td><a href="results/bao1/sortie_651865.txt" download>tech.txt</a></td>
+                  <td>
+                    <a href="results/bao1/sortiexml_651865.xml" download>tech.xml</a>
+                  </td>
+                </tr>
+                <tr>
+                  <th scope="row">TOUT</th>
+                  <td>TOUT</td>
+                  <td><a href="results/bao1/sortie_tout.txt" download>tout.txt</a></td>
+                  <td>
+                    <a href="results/bao1/sortiexml_tout.xml" download>tout.xml</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <hr />
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <ul class="list-inline text-center">
+              <li class="list-inline-item">
+                <a href="https://github.com/xingyuliuNLP">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://github.com/xiaoouwang">
+                  <span class="fa-stack fa-lg">
+                    <i class="fas fa-circle fa-stack-2x"></i>
+                    <i class="fab fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+            </ul>
+            <p class="copyright text-muted">
+              Créé par Xingyu LIU & Xiaoou WANG &copy;2020
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

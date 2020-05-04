@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>py</title>
+  </head>
+  <body>
+    <!-- HTML generated using hilite.me -->
+    <div
+      style="
+        background: #ffffff;
+        overflow: auto;
+        width: auto;
+        border: solid gray;
+        border-width: 0.1em 0.1em 0.1em 0.8em;
+        padding: 0.2em 0.6em;
+      "
+    >
+      <table>
+        <tr>
+          <td>
+            <pre style="margin: 0; line-height: 125%;">
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121</pre
+            >
+          </td>
+          <td>
+            <pre
+              style="margin: 0; line-height: 125%;"
+            ><span style="color: #888888"># coding: utf-8</span>
+<span style="color: #888888"># --------BAO3 Version: Python-RegEx----------------</span>
+<span style="color: #888888"># Le programme prend en entrée :</span>
+<span style="color: #888888"># 1. le nom du fichier de sortie Talismane issu de BAO2</span>
+<span style="color: #888888"># 2. le patron cible</span>
+<span style="color: #888888"># Le programme construit en sortie :</span>
+<span style="color: #888888"># 1. un fichier texte brut avec des formes classees et triees</span>
+<span style="color: #888888"># Ce script est lancé de la manière suivante</span>
+<span style="color: #888888"># python3 BAO3.py</span>
+<span style="color: #888888"># &gt;&gt;&gt; nomDufichier</span>
+<span style="color: #888888"># &gt;&gt;&gt; NOM/ADJ</span>
+<span style="color: #888888"># ---------------------------------------</span>
+
+<span style="color: #008800; font-weight: bold">from</span> <span style="color: #0e84b5; font-weight: bold">re</span> <span style="color: #008800; font-weight: bold">import</span> findall
+
+<span style="color: #888888"># ex. sortie_talismane_3208</span>
+filename <span style="color: #333333">=</span> <span style="color: #007020">input</span>(<span style="background-color: #fff0f0">&#39;Saisissez un fichier de sortie Talismane:</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&gt; &#39;</span>)
+<span style="color: #888888"># ex. NOM/ADJ </span>
+patterns <span style="color: #333333">=</span> <span style="color: #007020">input</span>(<span style="background-color: #fff0f0">&#39;Saisissez les patrons (séparés par un /):</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&gt; &#39;</span>)
+
+<span style="color: #888888"># on récupère les patrons saisis</span>
+patterns_list_input <span style="color: #333333">=</span> patterns<span style="color: #333333">.</span>split(<span style="background-color: #fff0f0">&#39;/&#39;</span>)
+<span style="color: #888888"># on nettoie les saisies pour corriger les potentielles erreurs de frappe</span>
+patterns_list <span style="color: #333333">=</span> <span style="color: #007020">list</span>(<span style="color: #007020">map</span>(<span style="color: #008800; font-weight: bold">lambda</span> x: findall(<span style="background-color: #fff0f0">r&#39;\w+&#39;</span>, x), patterns_list_input))
+
+<span style="color: #888888"># on initialise les deux dictionnaires</span>
+patterns_dico <span style="color: #333333">=</span> {}
+patrons_dico <span style="color: #333333">=</span> {}
+
+<span style="color: #008800; font-weight: bold">for</span> pattern <span style="color: #000000; font-weight: bold">in</span> patterns_list:
+    patrons_dico[<span style="background-color: #fff0f0">&#39; &#39;</span><span style="color: #333333">.</span>join(pattern)] <span style="color: #333333">=</span> []
+    <span style="color: #008800; font-weight: bold">try</span>:
+        <span style="color: #888888"># s&#39;il existe déjà un patron qui commence par le même POS tag, on met à jour la liste</span>
+        patterns_dico[pattern[<span style="color: #0000DD; font-weight: bold">0</span>]]<span style="color: #333333">.</span>append(pattern)
+    <span style="color: #008800; font-weight: bold">except</span> <span style="color: #FF0000; font-weight: bold">KeyError</span>:
+        <span style="color: #888888"># sinon on crée une entrée</span>
+        patterns_dico[pattern[<span style="color: #0000DD; font-weight: bold">0</span>]] <span style="color: #333333">=</span> [pattern]
+
+<span style="color: #888888"># on récupère le contenu du fichier</span>
+<span style="color: #008800; font-weight: bold">with</span> <span style="color: #007020">open</span>(filename, <span style="background-color: #fff0f0">&#39;r&#39;</span>, encoding<span style="color: #333333">=</span><span style="background-color: #fff0f0">&#39;utf-8&#39;</span>, newline<span style="color: #333333">=</span><span style="background-color: #fff0f0">&#39;</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&#39;</span>) <span style="color: #008800; font-weight: bold">as</span> fichier:
+    contenu <span style="color: #333333">=</span> fichier<span style="color: #333333">.</span>read()
+
+<span style="color: #888888"># on sépare les phrases </span>
+sentence_list <span style="color: #333333">=</span> contenu<span style="color: #333333">.</span>split(<span style="background-color: #fff0f0">&#39;</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n\n</span><span style="background-color: #fff0f0">&#39;</span>)
+sentence_list<span style="color: #333333">.</span>pop()
+
+<span style="color: #888888"># on traite phrase par phrase</span>
+<span style="color: #008800; font-weight: bold">for</span> sentence <span style="color: #000000; font-weight: bold">in</span> sentence_list:
+    lines <span style="color: #333333">=</span> sentence<span style="color: #333333">.</span>split(<span style="background-color: #fff0f0">&#39;</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&#39;</span>)
+    <span style="color: #888888"># on filtre les commentaires</span>
+    words <span style="color: #333333">=</span> <span style="color: #007020">list</span>(<span style="color: #007020">filter</span>(<span style="color: #008800; font-weight: bold">lambda</span> x: x <span style="color: #000000; font-weight: bold">and</span> x<span style="color: #333333">.</span>startswith(<span style="background-color: #fff0f0">&quot;#&quot;</span>) <span style="color: #000000; font-weight: bold">is</span> <span style="color: #008800; font-weight: bold">False</span>, lines))
+
+    <span style="color: #888888"># on ignore les phrases à un token</span>
+    <span style="color: #008800; font-weight: bold">if</span> <span style="color: #007020">len</span>(words) <span style="color: #333333">==</span> <span style="color: #0000DD; font-weight: bold">1</span>:
+        <span style="color: #008800; font-weight: bold">continue</span>
+        
+    <span style="color: #888888"># on génère les listes de tokens et de tags</span>
+    tokens <span style="color: #333333">=</span> []
+    tags <span style="color: #333333">=</span> []
+    
+    <span style="color: #888888"># on lit chaque ligne de tableau et on récupère les champs qui nous intéressent</span>
+    <span style="color: #008800; font-weight: bold">for</span> word <span style="color: #000000; font-weight: bold">in</span> words:
+        champs <span style="color: #333333">=</span> word<span style="color: #333333">.</span>split(<span style="background-color: #fff0f0">&#39;</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\t</span><span style="background-color: #fff0f0">&#39;</span>)
+        tokens<span style="color: #333333">.</span>append(champs[<span style="color: #0000DD; font-weight: bold">1</span>])
+        tags<span style="color: #333333">.</span>append(champs[<span style="color: #0000DD; font-weight: bold">3</span>])
+    
+    <span style="color: #888888"># on parcourt la liste de tags</span>
+    <span style="color: #008800; font-weight: bold">for</span> i, tag <span style="color: #000000; font-weight: bold">in</span> <span style="color: #007020">enumerate</span>(tags):
+        
+        <span style="color: #888888"># pour chaque tag, on regarde s&#39;il est présent dans la liste des POS tags initiaux des patrons</span>
+        <span style="color: #008800; font-weight: bold">if</span> tag <span style="color: #000000; font-weight: bold">in</span> patterns_dico<span style="color: #333333">.</span>keys():
+            <span style="color: #888888"># si oui on récupère les patrons correspondants</span>
+            pat_list <span style="color: #333333">=</span> patterns_dico[tag]
+            
+            <span style="color: #888888"># pour chaque patron on calcule sa longueur et on choppe une suite de même longueur dans tags </span>
+            <span style="color: #008800; font-weight: bold">for</span> ele <span style="color: #000000; font-weight: bold">in</span> pat_list:
+                pat_leng <span style="color: #333333">=</span> <span style="color: #007020">len</span>(ele)
+                
+                <span style="color: #888888"># si le patron est identique à la suite, on récupère le n-gram et on l&#39;ajoute dans le dictionnaire</span>
+                <span style="color: #008800; font-weight: bold">if</span> tags[i:i<span style="color: #333333">+</span>pat_leng] <span style="color: #333333">==</span> ele:
+                    n_gram <span style="color: #333333">=</span> <span style="background-color: #fff0f0">&#39; &#39;</span><span style="color: #333333">.</span>join(tokens[i:i<span style="color: #333333">+</span>pat_leng])
+                    key <span style="color: #333333">=</span> <span style="background-color: #fff0f0">&#39; &#39;</span><span style="color: #333333">.</span>join(ele)
+                    patrons_dico[key]<span style="color: #333333">.</span>append(n_gram)
+
+<span style="color: #888888"># on ouvre le fichier de sortie</span>
+<span style="color: #008800; font-weight: bold">with</span> <span style="color: #007020">open</span>(<span style="background-color: #fff0f0">&#39;sortie_non_trie.txt&#39;</span>, <span style="background-color: #fff0f0">&#39;w&#39;</span>, encoding<span style="color: #333333">=</span><span style="background-color: #fff0f0">&#39;utf-8&#39;</span>, newline<span style="color: #333333">=</span><span style="background-color: #fff0f0">&#39;</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&#39;</span>) <span style="color: #008800; font-weight: bold">as</span> sortie:
+    <span style="color: #888888"># on parcourt le dictionnaire</span>
+    <span style="color: #008800; font-weight: bold">for</span> pattern, patrons <span style="color: #000000; font-weight: bold">in</span> patrons_dico<span style="color: #333333">.</span>items():
+        <span style="color: #008800; font-weight: bold">for</span> patron <span style="color: #000000; font-weight: bold">in</span> patrons:
+            <span style="color: #888888"># on écrit les patrons</span>
+            sortie<span style="color: #333333">.</span>write(patron <span style="color: #333333">+</span> <span style="background-color: #fff0f0">&#39;</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&#39;</span>)
+					
+<span style="color: #888888"># on initialise le compteur</span>
+<span style="color: #888888"># à noter qu&#39;il compte le nombre total des patrons trouvés, sans distinction entre les patterns</span>
+countresult <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">0</span>
+
+<span style="color: #888888"># pour chaque entrée dans patrons_dico</span>
+<span style="color: #008800; font-weight: bold">for</span> pattern, patrons <span style="color: #000000; font-weight: bold">in</span> patrons_dico<span style="color: #333333">.</span>items():
+    <span style="color: #888888"># on inisitalise un dictionnaire temporaire</span>
+    tmp <span style="color: #333333">=</span> {}
+    <span style="color: #008800; font-weight: bold">for</span> patron <span style="color: #000000; font-weight: bold">in</span> patrons:
+        <span style="color: #888888"># on compte le nombre d&#39;occurrences de chaque patron</span>
+        <span style="color: #008800; font-weight: bold">try</span>:
+            tmp[patron] <span style="color: #333333">+=</span> <span style="color: #0000DD; font-weight: bold">1</span>
+        <span style="color: #008800; font-weight: bold">except</span> <span style="color: #FF0000; font-weight: bold">KeyError</span>:
+            tmp[patron] <span style="color: #333333">=</span> <span style="color: #0000DD; font-weight: bold">1</span>
+
+    <span style="color: #888888"># on trie les entrées</span>
+    tmplist <span style="color: #333333">=</span> <span style="color: #007020">sorted</span>(tmp<span style="color: #333333">.</span>items(), key<span style="color: #333333">=</span><span style="color: #008800; font-weight: bold">lambda</span> x: x[<span style="color: #0000DD; font-weight: bold">1</span>], reverse<span style="color: #333333">=</span><span style="color: #008800; font-weight: bold">True</span>)
+    <span style="color: #888888"># on met à jour le compteur</span>
+    countresult <span style="color: #333333">+=</span> <span style="color: #007020">len</span>(patrons)
+    <span style="color: #888888"># on met à jour le dictionnaire</span>
+    patrons_dico[pattern] <span style="color: #333333">=</span> tmplist
+
+<span style="color: #888888"># on écrit le résultat dans un fichier</span>
+<span style="color: #008800; font-weight: bold">with</span> <span style="color: #007020">open</span>(<span style="background-color: #fff0f0">&#39;sortie_trie.txt&#39;</span>, <span style="background-color: #fff0f0">&#39;w&#39;</span>, encoding<span style="color: #333333">=</span><span style="background-color: #fff0f0">&#39;utf-8&#39;</span>, newline<span style="color: #333333">=</span><span style="background-color: #fff0f0">&#39;</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&#39;</span>) <span style="color: #008800; font-weight: bold">as</span> sortie:
+    sortie<span style="color: #333333">.</span>write(<span style="background-color: #fff0f0">&#39;{} éléments trouvés</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&#39;</span><span style="color: #333333">.</span>format(countresult))
+    <span style="color: #008800; font-weight: bold">for</span> pattern, patrons <span style="color: #000000; font-weight: bold">in</span> patrons_dico<span style="color: #333333">.</span>items():
+        sortie<span style="color: #333333">.</span>write(<span style="background-color: #fff0f0">&quot;Type de pattern: {}</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n\n</span><span style="background-color: #fff0f0">&quot;</span><span style="color: #333333">.</span>format(pattern))
+        tmp <span style="color: #333333">=</span> <span style="color: #007020">list</span>(<span style="color: #007020">map</span>(<span style="color: #008800; font-weight: bold">lambda</span> x: sortie<span style="color: #333333">.</span>write(<span style="background-color: #fff0f0">&quot;{0}</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\t</span><span style="background-color: #fff0f0">{1}</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n</span><span style="background-color: #fff0f0">&quot;</span><span style="color: #333333">.</span>format(x[<span style="color: #0000DD; font-weight: bold">1</span>], x[<span style="color: #0000DD; font-weight: bold">0</span>])), patrons))
+        sortie<span style="color: #333333">.</span>write(<span style="background-color: #fff0f0">&#39;</span><span style="color: #666666; font-weight: bold; background-color: #fff0f0">\n\n</span><span style="background-color: #fff0f0">&#39;</span>)
+</pre>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>

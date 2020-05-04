@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>perl-rss</title>
+  </head>
+  <body>
+    <!-- HTML generated using hilite.me -->
+    <div
+      style="
+        background: #ffffff;
+        overflow: auto;
+        width: auto;
+        border: solid gray;
+        border-width: 0.1em 0.1em 0.1em 0.8em;
+        padding: 0.2em 0.6em;
+      "
+    >
+      <table>
+        <tr>
+          <td>
+            <pre style="margin: 0; line-height: 125%;">
+  1
+  2
+  3
+  4
+  5
+  6
+  7
+  8
+  9
+ 10
+ 11
+ 12
+ 13
+ 14
+ 15
+ 16
+ 17
+ 18
+ 19
+ 20
+ 21
+ 22
+ 23
+ 24
+ 25
+ 26
+ 27
+ 28
+ 29
+ 30
+ 31
+ 32
+ 33
+ 34
+ 35
+ 36
+ 37
+ 38
+ 39
+ 40
+ 41
+ 42
+ 43
+ 44
+ 45
+ 46
+ 47
+ 48
+ 49
+ 50
+ 51
+ 52
+ 53
+ 54
+ 55
+ 56
+ 57
+ 58
+ 59
+ 60
+ 61
+ 62
+ 63
+ 64
+ 65
+ 66
+ 67
+ 68
+ 69
+ 70
+ 71
+ 72
+ 73
+ 74
+ 75
+ 76
+ 77
+ 78
+ 79
+ 80
+ 81
+ 82
+ 83
+ 84
+ 85
+ 86
+ 87
+ 88
+ 89
+ 90
+ 91
+ 92
+ 93
+ 94
+ 95
+ 96
+ 97
+ 98
+ 99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111</pre
+            >
+          </td>
+          <td>
+            <pre
+              style="margin: 0; line-height: 125%;"
+            ><span style="color: #888888">#/usr/bin/perl</span>
+<span style="color: #888888"># --------BAO1 Version:Module XML::RSS----------------</span>
+<span style="color: #888888"># Le programme prend en entrée :</span>
+<span style="color: #888888"># 1. le nom du répertoire contenant les fichiers xml à traiter</span>
+<span style="color: #888888"># 2. le code imbriqué dans le nom du fichier servant à préciser quelle rubrique prise en compte (à la une correspond au code 3208 par ex.)</span>
+<span style="color: #888888"># Le programme extrait le texte dans des balises &lt;title&gt; et &lt;description&gt; et construit en sortie :</span>
+<span style="color: #888888"># 1. un fichier texte brut </span>
+<span style="color: #888888"># 2. un fichier xml structuré</span>
+<span style="color: #888888"># Ce script est lancé de la manière suivante</span>
+<span style="color: #888888"># perl BAO1_xml_rss.pl repertoire_corpus(./2019) rubrique(3208)</span>
+<span style="color: #888888">#-----------------------------------------------------------</span>
+
+<span style="color: #888888">################################ programme principal</span>
+<span style="color: #008800; font-weight: bold">use</span> <span style="color: #0e84b5; font-weight: bold">XML::</span>RSS;
+<span style="color: #008800; font-weight: bold">my</span> <span style="color: #996633">$rep</span><span style="color: #333333">=</span><span style="background-color: #fff0f0">&quot;$ARGV[0]&quot;</span>;
+<span style="color: #008800; font-weight: bold">my</span> <span style="color: #996633">$rubrique</span><span style="color: #333333">=</span><span style="background-color: #fff0f0">&quot;$ARGV[1]&quot;</span>;
+<span style="color: #996633">$rep</span><span style="color: #333333">=~</span> <span style="color: #000000; background-color: #fff0ff">s/[\/]$//</span>;
+<span style="color: #008800; font-weight: bold">my</span> <span style="color: #996633">$i</span><span style="color: #333333">=</span><span style="color: #0000DD; font-weight: bold">0</span>;
+<span style="color: #888888">#un hash de doublons</span>
+<span style="color: #008800; font-weight: bold">my</span> <span style="color: #996633">%doublons</span>;
+<span style="color: #007020">open</span>(OUT, <span style="background-color: #fff0f0">&quot;&gt;:encoding(utf-8)&quot;</span>, <span style="background-color: #fff0f0">&quot;sortie-$rubrique-xmlrss.txt&quot;</span>);
+<span style="color: #007020">open</span>(OUTXML, <span style="background-color: #fff0f0">&quot;&gt;:encoding(utf-8)&quot;</span>, <span style="background-color: #fff0f0">&quot;sortie-$rubrique-xmlrss.xml&quot;</span>);
+<span style="color: #008800; font-weight: bold">print</span> OUTXML <span style="background-color: #fff0f0">&quot;&lt;?xml version=\&quot;1.0\&quot; encoding=\&quot;UTF-8\&quot;?&gt;\n&quot;</span>;
+<span style="color: #008800; font-weight: bold">print</span> OUTXML <span style="background-color: #fff0f0">&quot;&lt;racine&gt;\n&quot;</span>;
+
+<span style="color: #888888">#----------------------------------------</span>
+<span style="color: #333333">&amp;</span>parcoursarborescencefichiers(<span style="color: #996633">$rep</span>);	<span style="color: #888888">#recurse!</span>
+<span style="color: #007020">close</span> OUT;
+<span style="color: #008800; font-weight: bold">print</span> OUTXML <span style="background-color: #fff0f0">&quot;&lt;/racine&gt;\n&quot;</span>;
+<span style="color: #007020">close</span> OUTXML;
+<span style="color: #007020">exit</span>;
+<span style="color: #888888">#----------------------------------------------</span>
+<span style="color: #008800; font-weight: bold">sub </span><span style="color: #0066BB; font-weight: bold">parcoursarborescencefichiers</span> {
+	<span style="color: #008800; font-weight: bold">my</span> <span style="color: #996633">$path</span> <span style="color: #333333">=</span> <span style="color: #007020">shift</span>(<span style="color: #996633">@_</span>);
+    <span style="color: #007020">opendir</span>(DIR, <span style="color: #996633">$path</span>) <span style="color: #000000; font-weight: bold">or</span> <span style="color: #007020">die</span> <span style="background-color: #fff0f0">&quot;can&#39;t open $path: $!\n&quot;</span>;
+	<span style="color: #008800; font-weight: bold">my</span> <span style="color: #996633">@files</span> <span style="color: #333333">=</span> <span style="color: #007020">readdir</span>(DIR);
+    <span style="color: #007020">closedir</span>(DIR);
+    
+	<span style="color: #008800; font-weight: bold">foreach</span> <span style="color: #008800; font-weight: bold">my</span> <span style="color: #996633">$file</span> (<span style="color: #996633">@files</span>) {
+		<span style="color: #008800; font-weight: bold">next</span> <span style="color: #008800; font-weight: bold">if</span> <span style="color: #996633">$file</span> <span style="color: #333333">=~</span><span style="color: #000000; background-color: #fff0ff"> /^\.\.?$/</span>;
+		<span style="color: #996633">$file</span> <span style="color: #333333">=</span> <span style="color: #996633">$path</span><span style="color: #333333">.</span><span style="background-color: #fff0f0">&quot;/&quot;</span><span style="color: #333333">.</span><span style="color: #996633">$file</span>;
+		<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">-</span>d <span style="color: #996633">$file</span>) {
+			<span style="color: #333333">&amp;</span>parcoursarborescencefichiers(<span style="color: #996633">$file</span>);	<span style="color: #888888">#recurse!</span>
+		}
+		<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #333333">-</span>f <span style="color: #996633">$file</span>) {
+		    <span style="color: #008800; font-weight: bold">if</span> (<span style="color: #996633">$file</span><span style="color: #333333">=~</span><span style="color: #000000; background-color: #fff0ff">/$rubrique.+\.xml$/</span>) {			
+				<span style="color: #008800; font-weight: bold">print</span> <span style="color: #996633">$i</span><span style="color: #333333">++</span>,<span style="background-color: #fff0f0">&quot; : $file \n&quot;</span>;
+				<span style="color: #008800; font-weight: bold">my</span> <span style="color: #996633">$rss</span><span style="color: #333333">=</span><span style="color: #008800; font-weight: bold">new</span> <span style="color: #0e84b5; font-weight: bold">XML::</span>RSS;
+				<span style="color: #888888">#parsefile ($file, \%options):analyser un fichier</span>
+				<span style="color: #888888">#eval():une fonction pour vérifier s&#39;il y a des erreurs de syntaxe ou d&#39;exéxutation, en cas d&#39;erreur, le message d&#39;erreur est assigné</span>
+				<span style="color: #007020">eval</span> {<span style="color: #996633">$rss</span><span style="color: #333333">-&gt;</span>parsefile(<span style="color: #996633">$file</span>); };
+				<span style="color: #008800; font-weight: bold">if</span>( <span style="color: #dd7700; font-weight: bold">$@</span> ) {
+					<span style="color: #dd7700; font-weight: bold">$@</span> <span style="color: #333333">=~</span> <span style="color: #000000; background-color: #fff0ff">s/at \/.*?$//s</span>;               <span style="color: #888888"># remove module line number</span>
+					<span style="color: #008800; font-weight: bold">print</span> <span style="color: #007020">STDERR</span> <span style="background-color: #fff0f0">&quot;\nERROR in &#39;$file&#39;:\n$@\n&quot;</span>;
+				} 
+				<span style="color: #008800; font-weight: bold">else</span> {
+					<span style="color: #008800; font-weight: bold">foreach</span> <span style="color: #008800; font-weight: bold">my</span> <span style="color: #996633">$item</span> (<span style="color: #996633">@</span>{<span style="color: #996633">$rss</span><span style="color: #333333">-&gt;</span>{<span style="background-color: #fff0f0">&#39;items&#39;</span>}}) {
+						<span style="color: #008800; font-weight: bold">my</span> <span style="color: #996633">$description</span><span style="color: #333333">=</span><span style="color: #996633">$item</span><span style="color: #333333">-&gt;</span>{<span style="background-color: #fff0f0">&#39;description&#39;</span>};
+						<span style="color: #008800; font-weight: bold">my</span> <span style="color: #996633">$titre</span><span style="color: #333333">=</span><span style="color: #996633">$item</span><span style="color: #333333">-&gt;</span>{<span style="background-color: #fff0f0">&#39;title&#39;</span>};
+						<span style="color: #008800; font-weight: bold">my</span> (<span style="color: #996633">$titrenettoye</span>,<span style="color: #996633">$descriptionnettoye</span>) <span style="color: #333333">=</span> <span style="color: #333333">&amp;</span>nettoyage(<span style="color: #996633">$titre</span>,<span style="color: #996633">$description</span>);
+						<span style="color: #888888">#supprimer les doublons:</span>
+						<span style="color: #008800; font-weight: bold">if</span> (<span style="color: #007020">exists</span> <span style="color: #996633">$doublons</span>{<span style="color: #996633">$titrenettoye</span>}) {
+							<span style="color: #996633">$doublons</span>{<span style="color: #996633">$titrenettoye</span>}<span style="color: #333333">++</span>;
+						}
+						<span style="color: #008800; font-weight: bold">else</span> {
+							<span style="color: #996633">$doublons</span>{<span style="color: #996633">$titrenettoye</span>}<span style="color: #333333">=</span><span style="color: #0000DD; font-weight: bold">1</span>;
+							<span style="color: #008800; font-weight: bold">print</span> OUT <span style="background-color: #fff0f0">&quot;$titrenettoye\n&quot;</span>;
+							<span style="color: #008800; font-weight: bold">print</span> OUT <span style="background-color: #fff0f0">&quot;$descriptionnettoye\n&quot;</span>;
+							<span style="color: #008800; font-weight: bold">print</span> OUTXML <span style="background-color: #fff0f0">&quot;&lt;article&gt;\n&quot;</span>;
+							<span style="color: #008800; font-weight: bold">print</span> OUTXML <span style="background-color: #fff0f0">&quot;&lt;titre&gt;$titrenettoye&lt;/titre&gt;\n&quot;</span>;
+							<span style="color: #008800; font-weight: bold">print</span> OUTXML <span style="background-color: #fff0f0">&quot;&lt;description&gt;$descriptionnettoye&lt;/description&gt;\n&quot;</span>;
+							<span style="color: #008800; font-weight: bold">print</span> OUTXML <span style="background-color: #fff0f0">&quot;&lt;/article&gt;\n&quot;</span>;
+						}
+					}
+				}		
+			}
+		}
+    }
+}
+
+<span style="color: #008800; font-weight: bold">sub </span><span style="color: #0066BB; font-weight: bold">nettoyage</span> {
+<span style="color: #888888">#@_ : my ($titre,$description) = @_</span>
+	<span style="color: #008800; font-weight: bold">my</span> <span style="color: #996633">$titre</span> <span style="color: #333333">=</span> <span style="color: #996633">$_</span>[<span style="color: #0000DD; font-weight: bold">0</span>]; 
+	<span style="color: #008800; font-weight: bold">my</span> <span style="color: #996633">$description</span> <span style="color: #333333">=</span> <span style="color: #996633">$_</span>[<span style="color: #0000DD; font-weight: bold">1</span>];
+	<span style="color: #888888">#pour faciliter la segmentation au plus tard, on ajoute un point</span>
+	<span style="color: #996633">$titre</span> <span style="color: #333333">=</span> <span style="color: #996633">$titre</span> <span style="color: #333333">.</span> <span style="background-color: #fff0f0">&quot;.&quot;</span> ; <span style="color: #888888"># $titre .= &quot;.&quot;;</span>
+	<span style="color: #996633">$description</span> <span style="color: #333333">=~</span> <span style="color: #000000; background-color: #fff0ff">s/&amp;#38;#39;/&#39;/g</span>; <span style="color: #888888">#$description = $description . &quot;.&quot;;</span>
+<span style="color: #008800; font-weight: bold">return</span> <span style="color: #996633">$titre</span>, <span style="color: #996633">$description</span>;
+}
+<span style="color: #888888">##################### sous-programmes (sub)</span>
+<span style="color: #008800; font-weight: bold">sub </span><span style="color: #0066BB; font-weight: bold">nettoyage</span> {
+  <span style="color: #888888"># @_ liste recu, pour acceder a des liste, on utilise $</span>
+  <span style="color: #888888"># on veut que les variables soit utilisees ici, my est obligatoire</span>
+  <span style="color: #888888"># shift/shift(@_) : on prend le premier element d&#39;une liste et on le renvoie</span>
+  <span style="color: #008800; font-weight: bold">my</span> <span style="color: #996633">$titre</span><span style="color: #333333">=</span><span style="color: #007020">shift</span>(<span style="color: #996633">@_</span>);
+  <span style="color: #008800; font-weight: bold">my</span> <span style="color: #996633">$description</span><span style="color: #333333">=</span><span style="color: #007020">shift</span>(<span style="color: #996633">@_</span>);
+  <span style="color: #008800; font-weight: bold">my</span> <span style="color: #996633">$titre</span><span style="color: #333333">=</span><span style="color: #996633">$_</span>[<span style="color: #0000DD; font-weight: bold">0</span>];
+  <span style="color: #008800; font-weight: bold">my</span> <span style="color: #996633">$description</span><span style="color: #333333">=</span><span style="color: #996633">$_</span>[<span style="color: #0000DD; font-weight: bold">1</span>];
+  <span style="color: #888888"># foreach my $element(@_){</span>
+
+  <span style="color: #888888"># }</span>
+  <span style="color: #996633">$description</span><span style="color: #333333">=~</span><span style="color: #000000; background-color: #fff0ff">s/&amp;lt;.+?&amp;gt;//g</span>;
+  <span style="color: #996633">$titre</span><span style="color: #333333">=~</span><span style="color: #000000; background-color: #fff0ff">s/&amp;lt;.+?&amp;gt;//g</span>;
+  <span style="color: #996633">$description</span><span style="color: #333333">=~</span><span style="color: #000000; background-color: #fff0ff">s/&amp;#38;&amp;#34;/&quot;/g</span>;
+  <span style="color: #996633">$titre</span><span style="color: #333333">=~</span><span style="color: #000000; background-color: #fff0ff">s/&amp;#38;&amp;#34;/&quot;/g</span>;
+  <span style="color: #996633">$description</span><span style="color: #333333">=~</span><span style="color: #000000; background-color: #fff0ff">s/&amp;#38;&amp;#39;/&#39;/g</span>;
+  <span style="color: #996633">$titre</span><span style="color: #333333">=~</span><span style="color: #000000; background-color: #fff0ff">s/&amp;#38;&amp;#39;/&#39;/g</span>;
+  <span style="color: #888888"># $ sert a reconnaitre la fin de chaine</span>
+  <span style="color: #996633">$titre</span><span style="color: #333333">=~</span><span style="color: #000000; background-color: #fff0ff">s/$/\./g</span>;
+  <span style="color: #008800; font-weight: bold">return</span> <span style="color: #996633">$titre</span>,<span style="color: #996633">$description</span>;
+}
+</pre>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </body>
+</html>
